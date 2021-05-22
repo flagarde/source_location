@@ -1,0 +1,57 @@
+#pragma once
+
+#if __cplusplus >= 202002L and __has_include(<source_location>)
+  #include <source_location>
+  using source_location = std::source_location;
+#elif __has_include(<experimental/source_location>)
+  #include <experimental/source_location>
+  using source_location = std::experimental::source_location;
+#else
+  #include <cstdint>
+  
+  class source_location
+  {
+  public:
+    static source_location current(const std::uint_least32_t& line,const std::uint_least32_t& column, const char* file_name, const char* function_name)
+    {
+      return source_location(line,column,file_name,function_name);
+    }
+    source_location() noexcept = default;
+
+    source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
+
+    #ifdef __cpp_rvalue_references
+    source_location(source_location&& other) noexcept : _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
+    
+    #endif // __cpp_rvalue_references
+
+    source_location(const std::uint_least32_t& line,const std::uint_least32_t& column, const char* file_name, const char* function_name): _line(line), _column(column), _file_name(file_name), _function_name(function_name){}
+
+    ~source_location() = default;
+
+    inline constexpr uint_least32_t line() const noexcept { return _line; }
+
+    inline constexpr uint_least32_t column() const noexcept { return _column; }
+
+    inline constexpr const char* file_name() const noexcept { return _file_name; }
+
+    inline constexpr const char* function_name() const noexcept { return _function_name; }
+
+    private:
+      const std::uint_least32_t _line{0};
+      const std::uint_least32_t _column{0};
+      const char* _file_name{""};
+      const char* _function_name{""};
+    };
+
+    #if defined (__STDC_VERSION__)
+      #define __FUNCTION__ __func__
+    #elif defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+     #define __FUNCTION__ __PRETTY_FUNCTION__
+    #else
+      #define __FUNCTION__ ""
+    #endif
+  
+
+    #define current() current(__LINE__, 0, __FILE__, __FUNCTION__)
+#endif
