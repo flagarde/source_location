@@ -25,11 +25,6 @@ option(BUILD_TESTS "Build the tests." ON)
 # include CMakePackageConfigHelpers macro
 include(CMakePackageConfigHelpers)
 
-# set version
-set(version 0.0.1)
-
-set_property(TARGET source_location PROPERTY VERSION ${version})
-set_property(TARGET source_location PROPERTY SOVERSION 0)
 set_property(TARGET source_location PROPERTY
   INTERFACE_source_location_MAJOR_VERSION 0)
 set_property(TARGET source_location APPEND PROPERTY
@@ -39,7 +34,6 @@ set_property(TARGET source_location APPEND PROPERTY
 # generate the version file for the config file
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/source_locationConfigVersion.cmake"
-  VERSION "${version}"
   COMPATIBILITY AnyNewerVersion
 )
 
