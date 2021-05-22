@@ -25,7 +25,7 @@
     {
       return source_location(line,column,file_name,function_name);
     }
-    source_location() NO_EXCEPT = default;
+    source_location() NO_EXCEPT : _line(0), _column(0), _file_name(""), _function_name("") {}
 
     source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
 
@@ -36,7 +36,7 @@
 
     source_location(const std::uint_least32_t& line,const std::uint_least32_t& column, const char* file_name, const char* function_name): _line(line), _column(column), _file_name(file_name), _function_name(function_name){}
 
-    ~source_location() = default;
+    ~source_location() {}
 
     inline CONSTEXPR uint_least32_t line() const NO_EXCEPT { return _line; }
 
@@ -47,10 +47,10 @@
     inline CONSTEXPR const char* function_name() const NO_EXCEPT { return _function_name; }
 
     private:
-      const std::uint_least32_t _line{0};
-      const std::uint_least32_t _column{0};
-      const char* _file_name{""};
-      const char* _function_name{""};
+      const std::uint_least32_t _line;
+      const std::uint_least32_t _column;
+      const char* _file_name;
+      const char* _function_name;
     };
     
     #undef CONSTEXPR
