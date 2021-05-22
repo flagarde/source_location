@@ -24,3 +24,22 @@ cross-platform pre c++20 source_location
 |        | Linux Clang | Linux GCC | MacOS Clang | MacOS GCC | Windows M2sys | Windows MSVC |
 |--------|-------------|-----------|-------------|-----------|---------------|--------------|
 | Github |[![Linux Clang][LCB]][LC]|[![Linux GCC][LGB]][LG]|[![MacOS Clang][MCB]][MC]|[![MacOS GCC][MGB]][MG]|[![Windows MSYS2][MSB]][MS]|[![Windows MSVC][MMB]][MM]|
+
+## Tests :
+ * On Linux :
+    * gcc-9 : c++98, c++11, c++17, c++20
+    * gcc-10 : c++98, c++11, c++17, c++20
+    * gcc-11 : c++98, c++11, c++17, c++20
+    * clang-10 : c++98, c++11, c++17, c++20
+    * clang-11 : c++98, c++11, c++17, c++20
+  * On MacOS :
+    * gcc-9 : c++98, c++11, c++17, c++20
+    * gcc-10 : c++98, c++11, c++17, c++20
+    * gcc-11 : c++98, c++11, c++17, c++20
+    * clang-12 : c++98, c++11, c++17, c++20  
+  * On Windows :
+    * MSVC 19.28.29915.0 : c++98, c++11, c++17, c++20
+    * MSYS2 GNU 10.2.0 : c++98, c++11, c++17, c++20
+    * MSYS2 Clang 12.0.0 : c++98, c++11, c++17, c++20
+    * clang-12 : c++98, c++11, c++17, c++20
+   
