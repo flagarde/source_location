@@ -1,7 +1,15 @@
 # source_location
-cross-platform pre c++20 source_location
+cross-platform pre c++20 `source_location`
 
-It uses the c++ source_location provided by the compiler if available
+It uses :
+```cpp
+#include <source_location>
+```
+or 
+``` cpp
+#include <experimental/source_location>
+```
+if they are available.
 
 [LC]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml
 [LCB]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml/badge.svg
@@ -41,20 +49,20 @@ int main()
 }
 ```
 ## Tests
- * On Linux :
-    * gcc-9 : c++98, c++11, c++17, c++20
-    * gcc-10 : c++98, c++11, c++17, c++20
-    * gcc-11 : c++98, c++11, c++17, c++20
-    * clang-10 : c++98, c++11, c++17, c++20
-    * clang-11 : c++98, c++11, c++17, c++20
-  * On MacOS :
-    * gcc-9 : c++98, c++11, c++17, c++20
-    * gcc-10 : c++98, c++11, c++17, c++20
-    * gcc-11 : c++98, c++11, c++17, c++20
-    * clang-12 : c++98, c++11, c++17, c++20  
-  * On Windows :
-    * MSVC 19.28.29915.0 : c++98, c++11, c++17, c++20
-    * MSYS2 GNU 10.2.0 : c++98, c++11, c++17, c++20
-    * MSYS2 Clang 12.0.0 : c++98, c++11, c++17, c++20
-    * clang-12 : c++98, c++11, c++17, c++20
+ * On `Linux` :
+    * `gcc-9` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `gcc-10` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `gcc-11` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `clang-10` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `clang-11` : `c++98`, `c++11`, `c++17`, `c++20`
+  * On `MacOS` :
+    * `gcc-9` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `gcc-10` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `gcc-11` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `clang-12` : `c++98`, `c++11`, `c++17`, `c++20`  
+  * On `Windows` :
+    * `MSVC 19.28.29915.0` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `MSYS2 GNU 10.2.0` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `MSYS2 Clang 12.0.0` : `c++98`, `c++11`, `c++17`, `c++20`
+    * `clang-12` : `c++98`, `c++11`, `c++17`, `c++20`
    
