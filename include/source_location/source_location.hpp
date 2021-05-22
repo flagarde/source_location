@@ -1,6 +1,6 @@
 #pragma once
 
-#if __cplusplus >= 202002L and __has_include(<source_location>)
+#if __cplusplus >= 202002L and __has_include(<source_location>) and !defined(__clang__)
   #include <source_location>
   using source_location = std::source_location;
 #elif __has_include(<experimental/source_location>)
