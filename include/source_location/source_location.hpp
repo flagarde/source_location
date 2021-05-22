@@ -25,12 +25,12 @@
     {
       return source_location(line,column,file_name,function_name);
     }
-    source_location() noexcept = default;
+    source_location() NO_EXCEPT = default;
 
     source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
 
     #ifdef __cpp_rvalue_references
-    source_location(source_location&& other) noexcept : _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
+    source_location(source_location&& other) NO_EXCEPT : _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
     
     #endif // __cpp_rvalue_references
 
@@ -38,13 +38,13 @@
 
     ~source_location() = default;
 
-    inline constexpr uint_least32_t line() const noexcept { return _line; }
+    inline CONSTEXPR uint_least32_t line() const NO_EXCEPT { return _line; }
 
-    inline constexpr uint_least32_t column() const noexcept { return _column; }
+    inline CONSTEXPR uint_least32_t column() const NO_EXCEPT { return _column; }
 
-    inline constexpr const char* file_name() const noexcept { return _file_name; }
+    inline CONSTEXPR const char* file_name() const NO_EXCEPT { return _file_name; }
 
-    inline constexpr const char* function_name() const noexcept { return _function_name; }
+    inline CONSTEXPR const char* function_name() const NO_EXCEPT { return _function_name; }
 
     private:
       const std::uint_least32_t _line{0};
@@ -52,7 +52,10 @@
       const char* _file_name{""};
       const char* _function_name{""};
     };
-
+    
+    #undef CONSTEXPR
+    #undef NO_EXCEPT
+    
     #if defined (__STDC_VERSION__)
       #define __FUNCTION__ __func__
     #elif defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
