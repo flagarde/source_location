@@ -21,6 +21,7 @@ install(EXPORT source_locationTargets
 )
 
 option(BUILD_TESTS "Build the tests." ON)
+option(BUILD_EXAMPLES "Build the examples." ON)
 
 # include CMakePackageConfigHelpers macro
 include(CMakePackageConfigHelpers)
@@ -59,4 +60,8 @@ export(EXPORT source_locationTargets
 if(BUILD_TESTS)
   include(CTest)
   add_subdirectory(tests)
+endif()
+
+if(BUILD_EXAMPLES)
+  add_subdirectory(examples)
 endif()
