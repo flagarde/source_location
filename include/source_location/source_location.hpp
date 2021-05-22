@@ -9,6 +9,15 @@
 #else
   #include <cstdint>
   
+  #if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1900)
+    #define NO_EXCEPT noexcept
+    #define CONSTEXPR constexpr
+  #else
+    #define NO_EXCEPT
+    #define CONSTEXPR
+  #endif
+    
+  
   class source_location
   {
   public:
