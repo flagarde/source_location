@@ -70,8 +70,10 @@
       #define __SOURCE_LOCATION_FUNCTION__ ""
     #endif
   
-
-    #define current() \
-    current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+    #if defined(_MSC_VER) && _MSC_VER >= 1900
+      #define current() current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+    #else
+      #define current(args...) current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+    #endif
 
 #endif
