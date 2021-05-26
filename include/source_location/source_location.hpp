@@ -61,19 +61,11 @@
     
     #undef CONSTEXPR
     #undef NO_EXCEPT
-    
-    #if defined (__STDC_VERSION__)
-      #define __SOURCE_LOCATION_FUNCTION__ __func__
-    #elif defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-     #define __SOURCE_LOCATION_FUNCTION__ __PRETTY_FUNCTION__
-    #else
-      #define __SOURCE_LOCATION_FUNCTION__ ""
-    #endif
   
-    #if defined(_MSC_VER) && _MSC_VER >= 1900
-      #define current() current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+    #if defined(_MSC_VER)
+      #define current() current( __LINE__ , 0, __FILE__ , __func__ )
     #else
-      #define current(args...) current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+      #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #endif
 
 #endif
