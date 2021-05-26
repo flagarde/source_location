@@ -71,5 +71,7 @@
     #endif
   
 
-    #define current() current(__LINE__, 0, __FILE__, __SOURCE_LOCATION_FUNCTION__)
+    #define current() \
+    current( __LINE__ , 0, __FILE__ , __SOURCE_LOCATION_FUNCTION__ )
+
 #endif
