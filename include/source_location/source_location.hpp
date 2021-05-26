@@ -57,13 +57,13 @@
     #undef NO_EXCEPT
     
     #if defined (__STDC_VERSION__)
-      #define __FUNCTION__ __func__
+      #define __SOURCE_LOCATION_FUNCTION__ __func__
     #elif defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-     #define __FUNCTION__ __PRETTY_FUNCTION__
+     #define __SOURCE_LOCATION_FUNCTION__ __PRETTY_FUNCTION__
     #else
-      #define __FUNCTION__ ""
+      #define __SOURCE_LOCATION_FUNCTION__ ""
     #endif
   
 
-    #define current() current(__LINE__, 0, __FILE__, __FUNCTION__)
+    #define current() current(__LINE__, 0, __FILE__, __SOURCE_LOCATION_FUNCTION__)
 #endif
