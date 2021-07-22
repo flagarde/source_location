@@ -8,9 +8,6 @@ env:
 on:
     push:
     pull_request:
-    schedule:
-    #Every Sunday at midnight
-    - cron:  '0 0 * * 0'
 
 jobs:
   # Checkout apply clang-format and upload artifact
@@ -36,7 +33,7 @@ jobs:
       env:
         CC: ${{ matrix.compiler-version[0] }}
         CXX: ${{ matrix.compiler-version[1] }}
-      run: cmake -S ${{ github.workspace }} -B ${{ env.CMAKE_BUILD_PREFIX }} -D CMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }} -DBUILD_ROOT=OFF -DBUILD_DAQ=OFF
+      run: cmake -S ${{ github.workspace }} -B ${{ env.CMAKE_BUILD_PREFIX }} -D CMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
 
     - name: Build
       run: cmake --build ${{ env.CMAKE_BUILD_PREFIX }} --config ${{ env.CMAKE_BUILD_TYPE }} --parallel 2
