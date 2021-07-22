@@ -8,9 +8,6 @@ env:
 on:
     push:
     pull_request:
-    schedule:
-    #Every Sunday at midnight
-    - cron:  '0 0 * * 0'
 
 jobs:
   # Checkout apply clang-format and upload artifact
