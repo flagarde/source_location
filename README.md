@@ -14,8 +14,8 @@ if they are available.
 [LC]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml
 [LCB]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml/badge.svg
 
-[LG]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml
-[LGB]: https://github.com/flagarde/source_location/actions/workflows/Linux-Clang.yml/badge.svg
+[LG]: https://github.com/flagarde/source_location/actions/workflows/Linux-GCC.yml
+[LGB]: https://github.com/flagarde/source_location/actions/workflows/Linux-GCC.yml/badge.svg
 
 [MC]: https://github.com/flagarde/source_location/actions/workflows/MacOS-Clang.yml
 [MCB]: https://github.com/flagarde/source_location/actions/workflows/MacOS-Clang.yml/badge.svg
@@ -52,7 +52,6 @@ int main()
  * On `Linux` :
     * `gcc-9` : `c++98`, `c++11`, `c++17`, `c++20`
     * `gcc-10` : `c++98`, `c++11`, `c++17`, `c++20`
-    * `gcc-11` : `c++98`, `c++11`, `c++17`, `c++20`
     * `clang-10` : `c++98`, `c++11`, `c++17`, `c++20`
     * `clang-11` : `c++98`, `c++11`, `c++17`, `c++20`
   * On `MacOS` :
