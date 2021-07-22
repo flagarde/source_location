@@ -3,9 +3,6 @@ name: Docs
 on:
     push:
     pull_request:
-    schedule:
-    #Every Sunday at midnight
-    - cron:  '0 0 * * 0'
 
 env:
   CMAKE_VERSION: 3.16.x
