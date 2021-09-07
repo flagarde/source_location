@@ -16,8 +16,7 @@
     #define NO_EXCEPT
     #define CONSTEXPR
   #endif
-    
-  
+
   class source_location
   {
   public:
@@ -25,13 +24,13 @@
     {
       return source_location(line,column,file_name,function_name);
     }
-    source_location() NO_EXCEPT 
+    source_location() NO_EXCEPT
       : _line(0), _column(0), _file_name(""), _function_name("") {}
 
     source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
 
     #ifdef __cpp_rvalue_references
-    source_location(source_location&& other) NO_EXCEPT 
+    source_location(source_location&& other) NO_EXCEPT
       : _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
     
     #endif // __cpp_rvalue_references
@@ -40,16 +39,16 @@
 
     ~source_location() {}
 
-    inline CONSTEXPR uint_least32_t line() const NO_EXCEPT 
+    inline CONSTEXPR uint_least32_t line() const NO_EXCEPT
     { return _line; }
 
-    inline CONSTEXPR uint_least32_t column() const NO_EXCEPT 
+    inline CONSTEXPR uint_least32_t column() const NO_EXCEPT
     { return _column; }
 
-    inline CONSTEXPR const char* file_name() const NO_EXCEPT 
+    inline CONSTEXPR const char* file_name() const NO_EXCEPT
     { return _file_name; }
 
-    inline CONSTEXPR const char* function_name() const NO_EXCEPT 
+    inline CONSTEXPR const char* function_name() const NO_EXCEPT
     { return _function_name; }
 
     private:
