@@ -5,7 +5,7 @@ It uses :
 ```cpp
 #include <source_location>
 ```
-or 
+or
 ``` cpp
 #include <experimental/source_location>
 ```
@@ -58,9 +58,8 @@ int main()
     * `gcc-9` : `c++98`, `c++11`, `c++17`, `c++20`
     * `gcc-10` : `c++98`, `c++11`, `c++17`, `c++20`
     * `gcc-11` : `c++98`, `c++11`, `c++17`, `c++20`
-    * `clang-12` : `c++98`, `c++11`, `c++17`, `c++20`  
+    * `clang-12` : `c++98`, `c++11`, `c++17`, `c++20`
   * On `Windows` :
     * `MSVC 19.28.29915.0` : `c++98`, `c++11`, `c++17`, `c++20`
     * `MSYS2 GNU 10.2.0` : `c++98`, `c++11`, `c++17`, `c++20`
     * `MSYS2 Clang 12.0.0` : `c++98`, `c++11`, `c++17`, `c++20`
-   
