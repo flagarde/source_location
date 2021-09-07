@@ -60,5 +60,4 @@
     #else
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #endif
-
 #endif
