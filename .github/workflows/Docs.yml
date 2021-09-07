@@ -1,46 +1,53 @@
-name: Docs
-
-on:
-    push:
-    pull_request:
+name: 'Docs'
 
 env:
-  CMAKE_VERSION: 3.16.x
-  BUILD_TYPE: Release
+  CMAKE_VERSION: '3.16.x'
+  CMAKE_BUILD_TYPE: 'Release'
+  CMAKE_BUILD_PREFIX: './build'
+
+on:
+  push:
+  pull_request:
 
 jobs:
   docs:
-
     runs-on: macos-latest
+    name: '📚 Docs'
 
     steps:
-    - name: Install required packages
+
+    - name: '🧰 Checkout'
+      uses: actions/checkout@v2.3.4
+      with:
+        fetch-depth: 0
+
+    - name: '🟨 Install required packages'
       run: brew install doxygen
         && brew install sphinx-doc
         && pip3 install sphinx-rtd-theme
         && pip3 install breathe
         && pip3 install sphinx-sitemap
 
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-
-    - name: Install cmake
+    - name: '🟨 Setup CMake'
       uses: jwlawson/actions-setup-cmake@v1.10
       with:
         cmake-version: '${{env.CMAKE_VERSION}}'
         github-api-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build docs
-      run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX=bin -DBUILD_DOCS=ON -DCMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-        && cmake --build build --config $ENV{BUILD_TYPE} --parallel ${N}
-        && cmake --install build --prefix bin --strip
-        && make install
-        && touch .nojekyll
+    - name: '🔧 Configure'
+      run: cmake -S . -B ${{ env.CMAKE_BUILD_PREFIX }} -D CMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }}
 
-    - name: Deploy docs
+    - name: '⚙️ Build'
+      run: cmake --build ${{ env.CMAKE_BUILD_PREFIX }} --config ${{ env.CMAKE_BUILD_TYPE }} --parallel 2 --target docs
+
+    - name: '📥 Install'
+      run: cmake --install ${{ env.CMAKE_BUILD_PREFIX }} --prefix ${{ github.workspace }}/bin --strip
+        && touch ${{ github.workspace }}/bin/docs/html/.nojekyll
+
+    - name: '🎉 Deploy'
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: bin/docs/Sphinx/html # The folder the action should deploy.
+        FOLDER: ${{ github.workspace }}/bin/docs/html # The folder the action should deploy.
         SINGLE_COMMIT: true
