@@ -1,4 +1,4 @@
-﻿add_executable(test_98 test.cpp)
+add_executable(test_98 test.cpp)
 target_link_libraries(test_98 PRIVATE source_location)
 target_compile_features(test_98 PRIVATE cxx_std_98)
 add_test(NAME test_98 COMMAND test_98)
@@ -17,4 +17,3 @@ add_executable(test_20 test.cpp)
 target_link_libraries(test_20 PRIVATE source_location)
 target_compile_features(test_20 PRIVATE cxx_std_20)
 add_test(NAME test_20 COMMAND test_20)
-
