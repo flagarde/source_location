@@ -20,17 +20,10 @@
   class source_location
   {
   public:
-    #if defined(_MSC_VER)
     static source_location current(const std::uint_least32_t& line,const std::uint_least32_t& column, const char* file_name, const char* function_name)
     {
       return source_location(line,column,file_name,function_name);
     }
-    #else
-    static source_location current(const std::uint_least32_t& line,const std::uint_least32_t& column, const char* file_name, const char* function_name)
-    {
-      return source_location(line,column,file_name,function_name);
-    }
-    #endif
     source_location() NO_EXCEPT : _line(0), _column(0), _file_name(""), _function_name("") {}
 
     source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
