@@ -56,7 +56,7 @@
     #undef NO_EXCEPT
 
     #if defined(_MSC_VER)
-      #define current() current( __LINE__ , 0, __FILE__ , __func__ )
+      #define current() current( __LINE__ , 0, __FILE__ , __FUNCTION__ )
     #else
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #endif
