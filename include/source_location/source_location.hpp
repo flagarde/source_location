@@ -55,8 +55,7 @@
     #undef NO_EXCEPT
 
     #if defined(_MSC_VER)
-      #define CURRENT2(line,column,file,function) current(line,column,file,_##function)
-      #define current() CURRENT2( __LINE__ , 0, __FILE__ , _FUNCTION__ )
+      #define current() current( __LINE__ , 0, __FILE__ , __func__ )
     #else
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #endif
