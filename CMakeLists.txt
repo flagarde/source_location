@@ -21,7 +21,7 @@ install(EXPORT source_locationTargets
 )
 
 option(BUILD_TESTS "Build the tests." ON)
-option(BUILD_EXAMPLES "Build the examples." ON)
+option(BUILD_EXAMPLES "Build the examples." OFF)
 
 # include CMakePackageConfigHelpers macro
 include(CMakePackageConfigHelpers)
