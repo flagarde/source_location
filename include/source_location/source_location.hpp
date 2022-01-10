@@ -59,6 +59,6 @@
     #elif defined(__clang__)
       #define current(args...) current( __builtin_LINE() , __builtin_COLUMN(), __builtin_FILE() , __builtin_FUNCTION() )
     #else
-      #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
+      #define current(args...) current( __builtin_LINE() , 0, __builtin_FILE() , __builtin_FUNCTION() )
     #endif
 #endif
