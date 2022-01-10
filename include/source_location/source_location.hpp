@@ -56,6 +56,8 @@
 
     #if defined(_MSC_VER)
       #define current() current( __LINE__ , 0, __FILE__ , __func__ )
+    #elif defined(__clang__)
+      #define current(args...) current( __builtin_LINE() , __builtin_COLUMN(), __builtin_FILE() , __builtin_FUNCTION() )
     #else
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #endif
