@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 
 project(source_location VERSION 1.0)
 
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 add_library(source_location INTERFACE)
 set_target_properties(source_location PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>;$<INSTALL_INTERFACE:include>"
@@ -20,8 +22,15 @@ install(EXPORT source_locationTargets
         DESTINATION lib/cmake/source_location
 )
 
-option(BUILD_TESTS "Build the tests." ON)
-option(BUILD_EXAMPLES "Build the examples." OFF)
+option(BUILD_TESTS "Build the tests" OFF)
+option(BUILD_EXAMPLES "Build the examples" ON)
+option(BUILD_DOCS "Build docs" OFF)
+
+if(BUILD_TESTS OR BUILD_DOCS)
+  include(GetCMakeMM)
+  cmmm(VERSION 2.2 REPOSITORY "flagarde/CMakeMM" DESTINATION "CMakeMM")
+  cmmm_modules_list(REPOSITORY "flagarde/CMakeCM")
+endif()
 
 # include CMakePackageConfigHelpers macro
 include(CMakePackageConfigHelpers)
@@ -57,8 +66,12 @@ export(EXPORT source_locationTargets
   NAMESPACE source_location::
 )
 
+if(BUILD_DOCS)
+  add_subdirectory(docs)
+endif()
+
 if(BUILD_TESTS)
-  include(CTest)
+  include(Doctest)
   add_subdirectory(tests)
 endif()
 
