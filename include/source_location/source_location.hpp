@@ -27,12 +27,12 @@
   class source_location
   {
   public:
-    #if (defined(__clang__) and __clang_major__ >= 9) || _MSC_VER > 1925
+    #if (defined(__clang__) && __clang_major__ >= 9) || _MSC_VER > 1925
       static source_location current(const long long& line = __builtin_LINE(),const long long& column = __builtin_COLUMN(), const char* file_name = __builtin_FILE(), const char* function_name = __builtin_FUNCTION())
       {
         return source_location(line,column,file_name,function_name);
       }
-    #elif defined(__GNUC__) and  __GNUC__ >= 5
+    #elif defined(__GNUC__) &&  __GNUC__ >= 5
       static source_location current(const long long& line = __builtin_LINE(),const long long& column = 0, const char* file_name = __builtin_FILE(), const char* function_name = __builtin_FUNCTION())
       {
         return source_location(line,column,file_name,function_name);
@@ -85,9 +85,9 @@
 
     #if defined(_MSC_VER) &&  _MSC_VER <= 1925
       #define current() current( __LINE__ , 0, __FILE__ , "Not available !" )
-    #elif defined(__clang__) and __clang_major__ < 9
+    #elif defined(__clang__) && __clang_major__ < 9
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
-    #elif defined(__GNUC__) and __GNUC__ < 5 and !defined(__clang__)
+    #elif defined(__GNUC__) && __GNUC__ < 5 && !defined(__clang__)
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
    #endif
 #endif
