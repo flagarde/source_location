@@ -23,7 +23,7 @@
   class source_location
   {
   public:
-    #if (defined(__clang__) && __clang_major__ >= 9) || _MSC_VER > 1925
+    #if (defined(__clang__) && __clang_major__ >= 9)
       static source_location current(const long int& line = __builtin_LINE(),const long int& column = __builtin_COLUMN(), const char* file_name = __builtin_FILE(), const char* function_name = __builtin_FUNCTION())
       {
         return source_location(line,column,file_name,function_name);
@@ -71,8 +71,12 @@
     #undef CONSTEXPR
     #undef NO_EXCEPT
 
-    #if defined(_MSC_VER) &&  _MSC_VER <= 1925
-      #define current() current( __LINE__ , 0, __FILE__ , "Not available !" )
+    #if defined(_MSC_VER)
+      #if _MSC_VER <= 1925
+        #define current() current( __LINE__ , 0, __FILE__ , "Not available !" )
+      #else
+        #define current() current( __builtin_LINE() , __builtin_COLUMN() , __builtin_FILE() , __builtin_FUNCTION() )
+      #endif
     #elif defined(__clang__) && __clang_major__ < 9
       #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
     #elif defined(__GNUC__) && __GNUC__ < 5 && !defined(__clang__)
