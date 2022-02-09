@@ -8,6 +8,7 @@ add_library(source_location INTERFACE)
 set_target_properties(source_location PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>;$<INSTALL_INTERFACE:include>"
 )
+add_library(source_location::source_location ALIAS source_location)
 
 # install the target and create export-set
 install(TARGETS source_location EXPORT source_locationTargets)
