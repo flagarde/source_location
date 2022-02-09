@@ -12,6 +12,6 @@ int main()
    std::cout << loc.file_name() << std::endl;
    std::cout << loc.function_name() << std::endl;
    std::cout << loc.line() << std::endl;
-   source_location s2 = src_clone();          // location should point here 
+   source_location s2 = src_clone();          // location should point here
    std::cout<< s2.line() << ' ' << s2.function_name() << '\n';
 }

@@ -16,3 +16,8 @@ repos:
     -   id: forbid-new-submodules
     -   id: trailing-whitespace
     -   id: fix-byte-order-marker
+
+- repo: https://github.com/codespell-project/codespell
+  rev: v2.1.0
+  hooks:
+    - id: codespell
