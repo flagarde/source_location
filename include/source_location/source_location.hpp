@@ -8,7 +8,7 @@
 #if __cplusplus >= 202002L && __has_include(<source_location>)
   #include <source_location>
   using source_location = std::source_location;
-#elif __cplusplus >= 201402L && __has_include(<experimental/source_location>)
+#elif __cplusplus >= 201402L && __has_include(<experimental/source_location>) && !defined(__clang__)
   #include <experimental/source_location>
   using source_location = std::experimental::source_location;
 #else
