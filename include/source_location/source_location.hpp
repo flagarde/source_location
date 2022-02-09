@@ -41,11 +41,11 @@
 
   public:
     #if __has_builtin(__builtin_COLUMN) || (defined(_MSC_VER) && _MSC_VER > 1925)
-      static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=__builtin_COLUMN(),const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
+      inline static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=__builtin_COLUMN(),const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
     #elif defined(__GNUC__) and (__GNUC__ > 4 or (__GNUC__ == 4 and __GNUC_MINOR__ >= 8))
-      static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=0,const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
+      inline static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=0,const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
     #else
-      static CONSTEXPR source_location current(const intType& line=0,const intType& column=0,const char* file_name="unsupported",const char* function_name="unsupported") NOEXCEPT
+      inline static CONSTEXPR source_location current(const intType& line=0,const intType& column=0,const char* file_name="unsupported",const char* function_name="unsupported") NOEXCEPT
     #endif
     {
       return source_location(line, column, file_name, function_name);
