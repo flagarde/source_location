@@ -6,13 +6,16 @@ list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 add_library(source_location INTERFACE)
 target_include_directories(source_location INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+set_target_properties(source_location PROPERTIES PUBLIC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/include/source_location/source_location.hpp")
 add_library(source_location::source_location ALIAS source_location)
 
-# install the target and create export-set
-install(TARGETS source_location EXPORT source_locationTargets)
-
-# install header file
-install(FILES include/source_location/source_location.hpp DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/source_location")
+install(TARGETS source_location
+        EXPORT source_locationTargets
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/source_location/"
+        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/source_location/")
 
 # generate and install export file
 install(EXPORT source_locationTargets
@@ -55,7 +58,7 @@ install(FILES
 
 # generate the export targets for the build tree
 export(EXPORT source_locationTargets
-  FILE "${CMAKE_BINARY_DIR}/cmake/source_locationTargets.cmake"
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/source_locationTargets.cmake"
   NAMESPACE source_location::
 )
 
