@@ -56,7 +56,7 @@ install(FILES
 
 # generate the export targets for the build tree
 export(EXPORT source_locationTargets
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/source_locationTargets.cmake"
+  FILE "${CMAKE_BINARY_DIR}/cmake/source_locationTargets.cmake"
   NAMESPACE source_location::
 )
 
