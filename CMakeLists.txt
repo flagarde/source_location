@@ -23,7 +23,7 @@ install(EXPORT source_locationTargets
 )
 
 option(BUILD_TESTS "Build the tests" OFF)
-option(BUILD_EXAMPLES "Build the examples" ON)
+option(BUILD_EXAMPLES "Build the examples" OFF)
 option(BUILD_DOCS "Build docs" OFF)
 
 if(BUILD_TESTS OR BUILD_DOCS)
@@ -34,12 +34,6 @@ endif()
 
 # include CMakePackageConfigHelpers macro
 include(CMakePackageConfigHelpers)
-
-set_property(TARGET source_location PROPERTY
-  INTERFACE_source_location_MAJOR_VERSION 0)
-set_property(TARGET source_location APPEND PROPERTY
-  COMPATIBLE_INTERFACE_STRING source_location_MAJOR_VERSION
-)
 
 # generate the version file for the config file
 write_basic_package_version_file(
