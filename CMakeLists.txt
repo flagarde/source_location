@@ -12,7 +12,7 @@ add_library(source_location::source_location ALIAS source_location)
 install(TARGETS source_location EXPORT source_locationTargets)
 
 # install header file
-install(FILES include/source_location/source_location.hpp DESTINATION include/source_location)
+install(FILES include/source_location/source_location.hpp DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/source_location")
 
 # generate and install export file
 install(EXPORT source_locationTargets
