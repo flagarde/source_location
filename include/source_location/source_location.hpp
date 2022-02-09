@@ -14,6 +14,8 @@
 #else
   #if __cplusplus >= 201103L || _MSVC_LANG >= 201103L
     #include <cstdint>
+  #endif
+  #if (__cplusplus >= 201103L && !defined(__clang__) && defined(__GNUC__) && __GNUC__>5) || (defined(_MSC_VER) && _MSC_VER >= 1900)
     #define NOEXCEPT noexcept
     #define CONSTEXPR constexpr
   #else
