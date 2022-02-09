@@ -4,9 +4,18 @@ env:
   CMAKE_VERSION: '3.16.x'
   CMAKE_BUILD_TYPE: 'Release'
   CMAKE_BUILD_PREFIX: './build'
+  BUILD_TESTS: 'TRUE'
+  BUILD_EXAMPLES: 'TRUE'
+  BUILD_DOCS: 'FALSE'
+  CMAKE_NUMBER_JOBS_TESTS: '1'
+  CMAKE_NUMBER_JOBS: '2'
 
 on:
   push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
   pull_request:
 
 jobs:
@@ -16,35 +25,44 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { icon: '🟨', cc: clang-10, cxx: clang++-10, name: 'Clang 10' }
-          - { icon: '🟦', cc: clang-11, cxx: clang++-11, name: 'Clang 11' }
+          - { icon: '🟨', cc: clang-6.0, cxx: clang++-6.0, name: 'Clang 6' }
+          - { icon: '🟦', cc: clang-7, cxx: clang++-7, name: 'Clang 7' }
+          - { icon: '🟩', cc: clang-8, cxx: clang++-8, name: 'Clang 8' }
+          - { icon: '🟥', cc: clang-9, cxx: clang++-9, name: 'Clang 9' }
+          - { icon: '🟧', cc: clang-10, cxx: clang++-10, name: 'Clang 10' }
+          - { icon: '🟪', cc: clang-11, cxx: clang++-11, name: 'Clang 11' }
     name: '🚧 ${{ matrix.icon }} ${{ matrix.name }}'
 
     steps:
 
-    - name: '🧰 Checkout'
-      uses: actions/checkout@v2.4.0
-      with:
-        fetch-depth: 0
+      - name: '🧰 Add toolchains'
+        run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && sudo apt-get update
 
-    - name: '${{ matrix.icon }} Setup CMake'
-      uses: jwlawson/actions-setup-cmake@v1.12
-      with:
-        cmake-version: '${{env.CMAKE_VERSION}}'
-        github-api-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: '🧰 Checkout'
+        uses: actions/checkout@v2.4.0
 
-    - name: '${{ matrix.icon }} Install packages'
-      run: sudo apt-get install libxpm-dev
+      - name: '${{ matrix.icon }} Setup CMake'
+        uses: jwlawson/actions-setup-cmake@v1.12
+        with:
+          cmake-version: '${{env.CMAKE_VERSION}}'
+          github-api-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: '🔧 Configure'
-      env:
-        CC: ${{matrix.cc}}
-        CXX: ${{matrix.cxx}}
-      run: cmake -S . -B ${{ env.CMAKE_BUILD_PREFIX }}/ -D CMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }} -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+      - name: '${{ matrix.icon }} Install ${{ matrix.cc }}'
+        run: sudo apt-get install ${{ matrix.cc }}
 
-    - name: '⚙️ Build'
-      run: cmake --build ${{ env.CMAKE_BUILD_PREFIX }} --config ${{ env.CMAKE_BUILD_TYPE }} --parallel 2
+      - name: '${{ matrix.icon }} Install packages'
+        if: ${{ env.INSTALL_PACKAGES != '' }}
+        run: sudo apt-get install ${{env.INSTALL_PACKAGES}}
 
-    - name: '🧪 Run tests'
-      working-directory: ${{ env.CMAKE_BUILD_PREFIX }}
-      run: ctest -C ${{ env.CMAKE_BUILD_TYPE }} -j2 -VV --output-on-failure
+      - name: '🔧 Configure'
+        env:
+          CC: ${{matrix.cc}}
+          CXX: ${{matrix.cxx}}
+        run: cmake -S . -B ${{ env.CMAKE_BUILD_PREFIX }}/ -D CMAKE_BUILD_TYPE=${{ env.CMAKE_BUILD_TYPE }} -DBUILD_TESTS=${{ env.BUILD_TESTS }} -DBUILD_DOCS=${{ env.BUILD_DOCS }} -DBUILD_EXAMPLES=${{ env.BUILD_EXAMPLES }}
+
+      - name: '⚙️ Build'
+        run: cmake --build ${{ env.CMAKE_BUILD_PREFIX }} --config ${{ env.CMAKE_BUILD_TYPE }} --parallel ${{ env.CMAKE_NUMBER_JOBS }}
+
+      - name: '🧪 Run tests'
+        working-directory: ${{ env.CMAKE_BUILD_PREFIX }}
+        run: ctest -C ${{ env.CMAKE_BUILD_TYPE }} --parallel ${{ env.CMAKE_NUMBER_JOBS_TESTS }} -VV --output-on-failure
