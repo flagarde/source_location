@@ -11,7 +11,7 @@ endif()
 
 foreach(STANDARD IN LISTS CXX_TEST)
   add_executable(test_${STANDARD} test.cpp)
-  target_link_libraries(test_${STANDARD} PRIVATE source_location PRIVATE doctest_with_main)
+  target_link_libraries(test_${STANDARD} PRIVATE source_location::source_location PRIVATE doctest_with_main)
   set_target_properties(test_${STANDARD} PROPERTIES CXX_STANDARD ${STANDARD} CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF COMPILE_DEFINITIONS STANDARD="C++${STANDARD}")
   if( CMAKE_COMPILER_IS_GNUCC )
     target_compile_options(test_${STANDARD} PRIVATE -Wall -Wextra -pedantic)
