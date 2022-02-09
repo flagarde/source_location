@@ -2,87 +2,81 @@
 #define SOURCE_LOCATION_H_
 
 #if !defined(__has_include)
- #define __has_include(include) 0
+ #define __has_include(include) 0L
 #endif
 
-#if (__cplusplus >= 202002L && __has_include(<source_location>) && !defined(__clang__)) || (_MSVC_LANG > 202002L) || (_MSC_VER > 1928 && _MSVC_LANG > 201703L)
+#if __cplusplus >= 202002L && __has_include(<source_location>)
   #include <source_location>
   using source_location = std::source_location;
-#elif __has_include(<experimental/source_location>) && !defined(__clang__) && __cplusplus >= 201402L
+#elif __cplusplus >= 201402L && __has_include(<experimental/source_location>)
   #include <experimental/source_location>
   using source_location = std::experimental::source_location;
 #else
-  #if (__cplusplus >= 201103L && !defined(__clang__) && defined(__GNUC__) && __GNUC__>5) || (defined(_MSC_VER) && _MSC_VER >= 1900)
-    #define NO_EXCEPT noexcept
+  #if __cplusplus >= 201103L || _MSVC_LANG >= 201103L
+    #include <cstdint>
+    #define NOEXCEPT noexcept
     #define CONSTEXPR constexpr
   #else
-    #define NO_EXCEPT
-    #define CONSTEXPR
+    #define NOEXCEPT noexcept
+    #define CONSTEXPR constexpr
+  #endif
+
+  #if !defined(__has_builtin)
+    #define __has_builtin(builtin) OL
   #endif
 
   class source_location
   {
-  public:
-    #if (defined(__clang__) && __clang_major__ >= 9)
-      static source_location current(const long int& line = __builtin_LINE(),const long int& column = __builtin_COLUMN(), const char* file_name = __builtin_FILE(), const char* function_name = __builtin_FUNCTION())
-      {
-        return source_location(line,column,file_name,function_name);
-      }
-    #elif defined(__GNUC__) &&  __GNUC__ >= 5
-      static source_location current(const long int& line = __builtin_LINE(),const long int& column = 0, const char* file_name = __builtin_FILE(), const char* function_name = __builtin_FUNCTION())
-      {
-        return source_location(line,column,file_name,function_name);
-      }
+  private:
+    #if __cplusplus >= 201103L || _MSVC_LANG >= 201103L
+      using intType = std::uint_least32_t;
     #else
-      static source_location current(const long int& line = 0,const long int& column = 0 ,const char* file_name = "Not available !" ,const char* function_name = "Not available !")
-      {
-        return source_location(line,column,file_name,function_name);
-      }
+      typedef int intType;
     #endif
-    
-    source_location() NO_EXCEPT : _line(0), _column(0), _file_name(""), _function_name("") {}
+    const intType m_line;
+    const intType m_column;
+    const char* m_file_name;
+    const char* m_function_name;
+    explicit CONSTEXPR source_location(const intType& line=0,const intType& column=0,const char* file_name="unsupported",const char* function_name="unsupported") NOEXCEPT : m_line(line), m_column(column), m_file_name(file_name), m_function_name(function_name) {}
 
-    source_location(const source_location& other): _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
-
-    #ifdef __cpp_rvalue_references
-      source_location(source_location&& other) NO_EXCEPT : _line(other.line()), _column(other.column()), _file_name(other.file_name()), _function_name(other.function_name()){}
-    #endif // __cpp_rvalue_references
-    source_location(const long int& line,const long int& column, const char* file_name, const char* function_name): _line(line), _column(column), _file_name(file_name), _function_name(function_name){}
-
-    ~source_location() {}
-    #if defined(__GNUC__)
-      #pragma GCC diagnostic push
-      #pragma GCC diagnostic ignored "-Wpedantic"
-    #endif
-      inline CONSTEXPR long int line() const NO_EXCEPT { return _line; }
-      inline CONSTEXPR long int column() const NO_EXCEPT { return _column; }
-      inline CONSTEXPR const char* file_name() const NO_EXCEPT { return _file_name; }
-      inline CONSTEXPR const char* function_name() const NO_EXCEPT { return _function_name; }
-    #if defined(__GNUC__)
-      #pragma GCC diagnostic pop
-    #endif
-    private:
-      const int _line;
-      const int _column;
-      const char* _file_name;
-      const char* _function_name;
-    };
-
-    #undef CONSTEXPR
-    #undef NO_EXCEPT
-
-    #if defined(_MSC_VER)
-      #if _MSC_VER <= 1925
-        #define current() current( __LINE__ , 0, __FILE__ , "Not available !" )
+  public:
+    #if __has_builtin(__builtin_FUNCTION)
+      #if __has_builtin(__builtin_COLUMN)
+        static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=__builtin_COLUMN(),const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
       #else
-        #define current() current( __builtin_LINE() , __builtin_COLUMN() , __builtin_FILE() , __builtin_FUNCTION() )
+        static CONSTEXPR source_location current(const intType& line=__builtin_LINE(),const intType& column=0,const char* file_name=__builtin_FILE(),const char* function_name=__builtin_FUNCTION()) NOEXCEPT
       #endif
-    #elif defined(__clang__) && __clang_major__ < 9
-      #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
-    #elif defined(__GNUC__) && __GNUC__ < 5 && !defined(__clang__)
-      #define current(args...) current( __LINE__ , 0, __FILE__ , __PRETTY_FUNCTION__ )
-   #endif
+    #else
+      static CONSTEXPR source_location current(const intType& line=0,const intType& column=0,const char* file_name="unsupported",const char* function_name="unsupported") NOEXCEPT
+    #endif
+    {
+      return source_location(line, column, file_name, function_name);
+    }
+
+    CONSTEXPR intType line() const NOEXCEPT
+    {
+      return m_line;
+    }
+
+    CONSTEXPR intType column() const NOEXCEPT
+    {
+      return m_column;
+    }
+
+    CONSTEXPR const char* file_name() const NOEXCEPT
+    {
+      return m_file_name;
+    }
+
+    CONSTEXPR const char* function_name() const NOEXCEPT
+    {
+      return m_function_name;
+    }
+  };
+
+  #undef NOEXCEPT
+  #undef CONSTEXPR
+
 #endif
 
-    
 #endif //SOURCE_LOCATION_H_
