@@ -42,12 +42,12 @@ jobs:
 
     - name: '📥 Install'
       run: cmake --install ${{ env.CMAKE_BUILD_PREFIX }} --prefix ${{ github.workspace }}/bin --strip
-        && touch ${{ github.workspace }}/bin/docs/html/.nojekyll
+        && touch ${{ github.workspace }}/bin/share/doc/source_location/html/.nojekyll
 
     - name: '🎉 Deploy'
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: ${{ github.workspace }}/bin/docs/html # The folder the action should deploy.
+        BRANCH: gh-pages
+        FOLDER: ${{ github.workspace }}/bin/share/doc/source_location/html/
         SINGLE_COMMIT: true
