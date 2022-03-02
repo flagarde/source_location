@@ -39,7 +39,7 @@ jobs:
         run: sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y && sudo apt-get update
 
       - name: '🧰 Checkout'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: '${{ matrix.icon }} Setup CMake'
         uses: jwlawson/actions-setup-cmake@v1.12
